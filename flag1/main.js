@@ -64,32 +64,32 @@ function init() {
 
     //star     
 
-    const vertices = [];
-				const divisions = 50;
+    let points = [];
+    var finalPoints = [];
+    var x;
+    var y;
+    for (let i = 1; i <= 6 ; i++) {
+        let t = 2*(Math.PI/5) * i;
+        x = 2*(Math.cos(t));
+        y = 2*(Math.sin(t)) ;
+        points.push( new THREE.Vector3((x/8) -0.3, (y/8) + 0.28, 5 ) );
 
-				for ( let i = 0; i <= divisions; i ++ ) {
+    }
+    finalPoints.push(points[0]);
+    finalPoints.push(points[2]);
+    finalPoints.push(points[4]);
+    finalPoints.push(points[1]);
+    finalPoints.push(points[3]);
+    finalPoints.push(points[0]);
 
-					const v = ( i / divisions ) * ( Math.PI * 2 );
+    const material = new THREE.LineBasicMaterial( { color: 'white' , linewidth : 5} );
+    //const material = new THREE.MeshFaceMaterial( { color: 0xFFFFFF } );
+    //const material = new THREE.MeshFaceMaterial([new THREE.MeshBasicMaterial({color: 0x00ff00})]);
+    //const material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF} );
 
-					const x = Math.sin( v );
-					const z = Math.cos( v );
-
-					vertices.push( x, 0, z );
-
-				}
-
-				const geometry = new THREE.BufferGeometry();
-				geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-    const material = new THREE.LineBasicMaterial( {
-        color: Math.random() * 0xffffff,
-        linewidth: 10
-    } );
-    const line = new THREE.Line( geometry, material );
-    //line.scale.setScalar( i / 3 );
-    scene.add( line );
-
-
-
+    const geometry = new THREE.BufferGeometry().setFromPoints( finalPoints );
+    const star = new THREE.Line( geometry, material );
+    scene.add(star);
 
 
 
